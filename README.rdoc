@@ -1,3 +1,13 @@
 = PlaidRails
 
 This project rocks and uses MIT-LICENSE.
+
+### Configuration
+
+gem 'plaid_rails'
+bundle install
+add   `mount PlaidRails::Engine => '/plaid', as: :plaid_rails` to the config/routes.rb
+
+### Webhooks
+
+http(s)://my.app.com/plaid_rails/webhooks
