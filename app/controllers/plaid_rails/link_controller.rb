@@ -12,7 +12,8 @@ module PlaidRails
           plaid_type: params[:type],
           name: params[:name],
           owner_id: params[:owner_id],
-          owner_type: params[:owner_type]
+          owner_type: params[:owner_type],
+          plaid_id: params[:account_id]
         ) unless PlaidRails::Account.exists?(owner_id: params[:owner_id], 
           owner_type: params[:owner_type], plaid_type: params[:type])
         
