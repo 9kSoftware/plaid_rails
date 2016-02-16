@@ -7,7 +7,11 @@ module PlaidRails
   class << self
     attr_accessor :customer_id,
       :secret,
-      :environment_location
+      :environment_location,
+      :public_key,
+      :webhook,
+      :long_tail
+   
     
     def configure(&block)
       raise ArgumentError, "must provide a block" unless block_given?

@@ -7,8 +7,18 @@ This project rocks and uses MIT-LICENSE.
 ### Configuration
 
 gem 'plaid_rails'
+
 bundle install
+
+add config/initializer/plaid.rb
+
+
 add   `mount PlaidRails::Engine => '/plaid', as: :plaid_rails` to the config/routes.rb
+
+### Setup Link
+add `<%= render partial: "plaid_rails/link/show", locals: {owner: @account}%>` to your view
+
+override the js file, add plaid_rails/link/authenticate.js.erb
 
 ### Webhooks
 

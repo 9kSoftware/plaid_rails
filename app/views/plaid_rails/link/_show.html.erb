@@ -1,0 +1,49 @@
+<!--form id="link-form" method="POST" action="/plaid/authenticate"></form-->
+<button id="plaidLinkButton">Link your bank Account</button>
+<!--script
+  src="https://cdn.plaid.com/link/stable/link-initialize.js"
+  data-client-name="Client Name"
+  data-form-id="link-form"
+  data-key=""
+  data-product="auth"
+  data-env=""
+  data-long-tail="<%=  PlaidRails.long_tail %>"
+  >
+</script -->
+<script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
+<script>
+  var linkHandler = Plaid.create({
+      env: '<%= Rails.env.production? ? "production" : "tartan"%>',
+      clientName: '<%= client_name%>',
+      key: '<%=  PlaidRails.public_key %>',
+      product: 'auth',
+      onLoad: function () {
+          // The Link module finished loading.
+      },
+      onSuccess: function (public_token, metadata) {
+          // Send the public_token to your app server here.
+          // The metadata object contains info about the institution the
+          // user selected and the account ID, if selectAccount is enabled.
+          $.ajax({
+              type: 'POST',
+              dataType: 'script',
+              url: '/plaid/authenticate',
+              data: {public_token: public_token,
+                  name: metadata.institution.name,
+                  type: metadata.institution.type,
+                  account_id: metadata.account_id,
+                  owner_type: '<%=owner.class.name%>',
+                  owner_id: '<%=owner.id%>'
+              }
+          });
+      },
+      onExit: function () {
+          // The user exited the Link flow.
+      },
+  });
+
+// Trigger the authentication view
+  document.getElementById('plaidLinkButton').onclick = function () {
+      linkHandler.open();
+  };
+</script>
