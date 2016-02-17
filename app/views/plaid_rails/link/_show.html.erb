@@ -1,49 +1,14 @@
 <button id="plaidLinkButton">Link your Bank Account</button>
-<script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
+
+
 <div id="plaid-data"
-     data-client-name="<%= client_name%>"
+     data-client-name="<%= client_name %>"
      data-env="<%= Rails.env.production? ? "production" : "tartan"%>"
      data-key="<%=  PlaidRails.public_key %>"
      data-webhook="<%=  PlaidRails.webhook %>"
-     data-owner-type="<%=owner.class.name%>"
-     data-owner-id="<%=owner.id%>"
-     ></div>
-<script>
-  var plaidData = $("#plaid-data")
-  var linkHandler = Plaid.create({
-      env: plaidData.data('env'),
-      clientName: plaidData.data('client-name'),
-      key: plaidData.data('key'),
-      product: 'auth',
-      webhook: plaidData.data('webhook'),
-      
-      onLoad: function () {
-          // The Link module finished loading.
-      },
-      onSuccess: function (public_token, metadata) {
-          // Send the public_token to your app server here.
-          // The metadata object contains info about the institution the
-          // user selected and the account ID, if selectAccount is enabled.
-          $.ajax({
-              type: 'POST',
-              dataType: 'script',
-              url: '/plaid/authenticate',
-              data: {
-                  public_token: public_token,
-                  name: metadata.institution.name,
-                  type: metadata.institution.type,
-                  owner_type: plaidData.data('owner-type'),
-                  owner_id: plaidData.data('owner-id')
-              }
-          });
-      },
-      onExit: function () {
-          // The user exited the Link flow.
-      },
-  });
+     data-owner-type="<%=  owner.class.name %>"
+     data-owner-id="<%=  owner.id %>">
+</div>
 
-// Trigger the authentication view
-  document.getElementById('plaidLinkButton').onclick = function () {
-      linkHandler.open();
-  };
-</script>
+<%=javascript_include_tag "https://cdn.plaid.com/link/stable/link-initialize.js" %>
+<%=javascript_include_tag "plaid_rails/link.js" %>
