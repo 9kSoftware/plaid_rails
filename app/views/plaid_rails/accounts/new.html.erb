@@ -1,0 +1,17 @@
+<h3>Select The Accounts To Link</h3>
+
+
+<%= form_tag "/plaid/accounts", method: "post", remote: true do %>
+  <%= hidden_field_tag "account[access_token]", params["access_token"] %>
+  <%= hidden_field_tag "account[name]", params["name"] %>
+  <%= hidden_field_tag "account[type]", params["type"] %>
+  <%= hidden_field_tag "account[owner_id]", params["owner_id"] %>
+  <%= hidden_field_tag "account[owner_type]", params["owner_type"] %>
+  <% @accounts.each_with_index do |account,index| %>
+    <%= check_box_tag "account[account_ids][]", account.id,nil,{id: "account_account_ids_#{index}"}%> 
+    <label for="account_account_ids_<%=index%>"> <%= "#{account.meta["name"]} - #{account.meta["number"]}"%></label><br/>
+  <%end%>
+
+  <%= submit_tag "Save", :class=>"button small" %>
+  <%= button_tag "Cancel" , :class=>"button small close"%>
+<%end%>

@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 20160215155024) do
     t.string   "access_token"
     t.string   "plaid_type"
     t.string   "name"
+    t.string   "bank_name"
+    t.integer  "number"
     t.string   "plaid_id"
     t.string   "owner_type"
     t.integer  "owner_id"

@@ -1,22 +1,22 @@
-<!--form id="link-form" method="POST" action="/plaid/authenticate"></form-->
-<button id="plaidLinkButton">Link your bank Account</button>
-<!--script
-  src="https://cdn.plaid.com/link/stable/link-initialize.js"
-  data-client-name="Client Name"
-  data-form-id="link-form"
-  data-key=""
-  data-product="auth"
-  data-env=""
-  data-long-tail="<%=  PlaidRails.long_tail %>"
-  >
-</script -->
+<button id="plaidLinkButton">Link your Bank Account</button>
 <script src="https://cdn.plaid.com/link/stable/link-initialize.js"></script>
+<div id="plaid-data"
+     data-client-name="<%= client_name%>"
+     data-env="<%= Rails.env.production? ? "production" : "tartan"%>"
+     data-key="<%=  PlaidRails.public_key %>"
+     data-webhook="<%=  PlaidRails.webhook %>"
+     data-owner-type="<%=owner.class.name%>"
+     data-owner-id="<%=owner.id%>"
+     ></div>
 <script>
+  var plaidData = $("#plaid-data")
   var linkHandler = Plaid.create({
-      env: '<%= Rails.env.production? ? "production" : "tartan"%>',
-      clientName: '<%= client_name%>',
-      key: '<%=  PlaidRails.public_key %>',
+      env: plaidData.data('env'),
+      clientName: plaidData.data('client-name'),
+      key: plaidData.data('key'),
       product: 'auth',
+      webhook: plaidData.data('webhook'),
+      
       onLoad: function () {
           // The Link module finished loading.
       },
@@ -28,12 +28,12 @@
               type: 'POST',
               dataType: 'script',
               url: '/plaid/authenticate',
-              data: {public_token: public_token,
+              data: {
+                  public_token: public_token,
                   name: metadata.institution.name,
                   type: metadata.institution.type,
-                  account_id: metadata.account_id,
-                  owner_type: '<%=owner.class.name%>',
-                  owner_id: '<%=owner.id%>'
+                  owner_type: plaidData.data('owner-type'),
+                  owner_id: plaidData.data('owner-id')
               }
           });
       },

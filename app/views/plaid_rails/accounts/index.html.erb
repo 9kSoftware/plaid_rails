@@ -1,4 +1,5 @@
-<h1>PlaidRails::Accounts#index</h1>
-<p>Create your customer view in your app at
-    app/views/plaid_rails/accounts/index.html.erb
-</p>
+<h3>Accounts</h3>
+
+<% @accounts.each do |account| %>
+  <%=account.name%> <br/>
+<%end%>
