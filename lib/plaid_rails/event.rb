@@ -1,3 +1,5 @@
+require "active_support/notifications"
+
 module PlaidRails
   module Event
     class << self
@@ -9,20 +11,22 @@ module PlaidRails
       end
       alias :setup :configure
       
-      def instrument(params)
-        #begin
-        event = event_retriever.call(params)
-        #        rescue Stripe::AuthenticationError => e
-        #          if params[:type] == "account.application.deauthorized"
-        #            event = Stripe::Event.construct_from(params.deep_symbolize_keys)
-        #          else
-        #            raise UnauthorizedError.new(e)
-        #          end
-        #        rescue Stripe::StripeError => e
-        #          raise UnauthorizedError.new(e)
-        #        end
-
-        backend.instrument namespace.call(event[:type]), event if event
+      def instrument(event)
+        name = case event.code
+        when 0
+          "transactions.initial"
+        when 1
+          "transactions.new"
+        when 2
+          "transactions.interval"
+        when 3
+          "transactions.removed"
+        when 4
+          "webhook.updated"
+        else
+          "plaid.error"
+        end
+        backend.instrument namespace.call(name), event if event
       end
       
       def subscribe(name, callable = Proc.new)
@@ -65,7 +69,7 @@ module PlaidRails
 
     self.adapter = NotificationAdapter
     self.backend = ActiveSupport::Notifications
-    self.event_retriever = lambda { |params| Stripe::Event.retrieve(params[:id]) }
-    self.namespace = Namespace.new("plaid_event", ".")
+    # self.event_retriever = lambda { |params| PlaidRails::Event.retrieve(params[:webhooks][:access_token]) }
+    self.namespace = Namespace.new("plaid_rails", ".")
   end
 end

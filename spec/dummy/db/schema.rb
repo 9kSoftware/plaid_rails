@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(version: 20160215155024) do
     t.string   "plaid_id"
     t.string   "owner_type"
     t.integer  "owner_id"
+    t.datetime "last_sync"
+    t.decimal  "current_balance"
+    t.decimal  "available_balance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
