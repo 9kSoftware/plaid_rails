@@ -9,6 +9,9 @@ class CreatePlaidRailsAccounts < ActiveRecord::Migration
       t.string :plaid_id
       t.string :owner_type
       t.integer :owner_id
+      t.datetime :last_sync
+      t.decimal :current_balance
+      t.decimal :available_balance
       t.timestamps
     end
   end

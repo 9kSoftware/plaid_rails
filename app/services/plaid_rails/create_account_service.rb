@@ -17,6 +17,8 @@ module PlaidRails
           number: account.meta["number"],
           owner_id: account_params["owner_id"],
           owner_type: account_params["owner_type"],
+          available_balance: account.available_balance,
+          current_balance: account.current_balance,
           plaid_id: id
         ) unless PlaidRails::Account.exists?(plaid_id: id)
       end
