@@ -3,7 +3,7 @@ var linkHandler = Plaid.create({
     env: plaidData.data('env'),
     clientName: plaidData.data('client-name'),
     key: plaidData.data('key'),
-    product: 'auth',
+    product: 'connect',
     webhook: plaidData.data('webhook'),
     onLoad: function () {
         // The Link module finished loading.
