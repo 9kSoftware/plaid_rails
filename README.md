@@ -2,7 +2,7 @@
 
 [ ![Codeship Status for cdwilhelm/plaid_rails](https://codeship.com/projects/0ffcd970-b638-0133-0560-5ef9b905983d/status?branch=master)](https://codeship.com/projects/134308)
 
-This gem is a Rails Engine to provide an interface to (Plaid)[http://plaid.com] using the plaid-ruby api
+This gem is a Rails Engine to provide an interface to [Plaid](http://plaid.com]) using the plaid-ruby api
 
 ## Installation
 
@@ -56,7 +56,7 @@ Overwrite the plaid_rails views with your own views.
 * plaid_rails/link/authenticate.js.erb - renders after the Plaid.create javascript function is successful
 
 ### Webhooks
-The plaid webhooks will process the subscribe to notifiers to run transactions and report errors.  
+The plaid webhooks runs subscribers for to process transactions and report errors.  
 
 * transactions.initial - code 0
 * transactions.new - code 1
