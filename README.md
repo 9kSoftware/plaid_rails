@@ -8,17 +8,22 @@ This gem is a Rails Engine to provide an interface to (Plaid)[http://plaid.com] 
 
 Add the gem to your app
 
-```gem 'plaid_rails'```
+```ruby
+gem 'plaid_rails'
+```
 
 Run the installer
 ```bash
 bundle install
 rails g plaid_rails:install
-rake db:migrate```
+rake db:migrate
+```
 
 The plaid_rails:install task will add the plaid_rails engine to the config/routes.rb and create an initializer 
-```config/initializer/plaid.rb
-mount PlaidRails::Engine => '/plaid', as: :plaid_rails` to the config/routes.rb```
+config/initializer/plaid.rb
+```ruby
+mount PlaidRails::Engine => '/plaid', as: :plaid_rails` to the config/routes.rb
+```
 
 Update the config/initializer/plaid.rb configuration for your application.
 
@@ -40,7 +45,8 @@ Add a button and javascript to your view to link connect to bank accounts using 
 
 <!-- put at bottom of page -->
 <%=javascript_include_tag "https://cdn.plaid.com/link/stable/link-initialize.js" %>
-<%=javascript_include_tag "plaid_rails/link.js" %>```
+<%=javascript_include_tag "plaid_rails/link.js" %>
+```
 
 Overwrite the plaid_rails views with your own views.
 * plaid_rails/accounts/create.html - rendered after creating an account
