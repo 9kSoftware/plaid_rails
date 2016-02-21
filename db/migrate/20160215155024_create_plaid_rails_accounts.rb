@@ -10,9 +10,13 @@ class CreatePlaidRailsAccounts < ActiveRecord::Migration
       t.string :owner_type
       t.integer :owner_id
       t.datetime :last_sync
-      t.decimal :current_balance
-      t.decimal :available_balance
+      t.decimal :current_balance, :precision => 10, :scale => 2
+      t.decimal :available_balance, :precision => 10, :scale => 2
+      t.string :error
       t.timestamps
     end
+    add_index :plaid_rails_accounts, :access_token
+    add_index :plaid_rails_accounts, :owner_id
+    add_index :plaid_rails_accounts, :plaid_id
   end
 end
