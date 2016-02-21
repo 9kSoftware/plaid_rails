@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 2.2.4
+env:
+  - DB=sqlite
+script:
+  - bundle exec rspec
+before_script:
+  - bundle install
+  - bundle exec rake db:create db:migrate RAILS_ENV=test
