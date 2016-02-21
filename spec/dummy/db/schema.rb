@@ -23,11 +23,16 @@ ActiveRecord::Schema.define(version: 20160215155024) do
     t.string   "owner_type"
     t.integer  "owner_id"
     t.datetime "last_sync"
-    t.decimal  "current_balance"
-    t.decimal  "available_balance"
+    t.decimal  "current_balance",   precision: 10, scale: 2
+    t.decimal  "available_balance", precision: 10, scale: 2
+    t.string   "error"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "plaid_rails_accounts", ["access_token"], name: "index_plaid_rails_accounts_on_access_token"
+  add_index "plaid_rails_accounts", ["owner_id"], name: "index_plaid_rails_accounts_on_owner_id"
+  add_index "plaid_rails_accounts", ["plaid_id"], name: "index_plaid_rails_accounts_on_plaid_id"
 
   create_table "plaid_rails_webhooks", force: true do |t|
     t.integer  "code"
