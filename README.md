@@ -2,7 +2,7 @@
 
 [ ![Codeship Status for cdwilhelm/plaid_rails](https://codeship.com/projects/0ffcd970-b638-0133-0560-5ef9b905983d/status?branch=master)](https://codeship.com/projects/134308)
 
-This gem is a Rails Engine to provide an interface to [Plaid](http://plaid.com]) using the plaid-ruby api
+This gem is a Rails Engine to provide an interface to [Plaid](http://plaid.com) using the plaid-ruby api
 
 ## Installation
 
@@ -29,7 +29,8 @@ Update the config/initializer/plaid.rb configuration for your application.
 
 ### Views
 
-Add a button and javascript to your view to link connect to bank accounts using Plaid.
+Add a button and javascript to your view to use [Link](https://plaid.com/docs/#link) with Plaid.
+
 ```ruby
 <button id="plaidLinkButton" class="small">Link your Bank Account</button>
 
