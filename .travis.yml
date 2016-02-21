@@ -7,4 +7,4 @@ script:
   - bundle exec rspec
 before_script:
   - bundle install
-  - bundle exec rake db:create db:migrate RAILS_ENV=test
+  - RAILS_ENV=test rake app:db:create app:db.migration spec
