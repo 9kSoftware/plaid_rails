@@ -7,7 +7,7 @@ module PlaidRails
         # set Plaid::User
         user = Plaid.set_user(account_params["access_token"],['auth'])
         #find the account by account_id 
-        account = user.accounts.select{|a| a.id==id}.first
+        account = user.accounts.find{|a| a.id==id}
         
         PlaidRails::Account.create!(
           access_token: account_params["access_token"], 
