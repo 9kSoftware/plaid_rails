@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "plaid_rails"
   s.version     = PlaidRails::VERSION
   s.authors     = ["Curt Wilhelm"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of PlaidRails."
-  s.description = "TODO: Description of PlaidRails."
+  s.email       = ["curt_wilhelm@yahoo.com"]
+  s.homepage    = "https://github.com/cdwilhelm/plaid_rails"
+  s.summary     = "A Rails Engine to work with Plaid"
+  s.description = "A Rails Engine to work with Plaid"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
