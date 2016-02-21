@@ -7,7 +7,7 @@ module PlaidRails
     end
 
     def install_route
-      route "mount PlaidRails::Engine => '/plaid_rails', as: :plaid_rails"
+      route "mount PlaidRails::Engine => '/plaid', as: :plaid_rails"
     end
   end
 end
