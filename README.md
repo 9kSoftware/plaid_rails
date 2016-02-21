@@ -67,4 +67,4 @@ The plaid webhooks runs subscribers for to process transactions and report error
 * plaid.error - any other code
 
 Update the PlaidRails.configuration.webhook with  the address of the webhook url.  The route is `plaid_rails/webhook`
-i.e. http(s)://my.app.com/plaid_rails/webhooks 
+i.e. http(s)://my.app.com/plaid/webhooks 
