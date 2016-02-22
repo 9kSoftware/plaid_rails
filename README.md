@@ -4,6 +4,12 @@
 
 This gem is a Rails Engine to provide an interface to [Plaid](http://plaid.com) using the plaid-ruby api
 
+PlaidRails provides these features:
+
+* Accepts webhooks callbacks from plaid to manage transaction requests or errors
+* Configures Plaid Link to easily connect with the banks
+* Stores bank details to use within your application
+
 ## Installation
 
 Add the gem to your app
@@ -19,34 +25,32 @@ rails g plaid_rails:install
 rake db:migrate
 ```
 
-The plaid_rails:install task will add the plaid_rails engine to the config/routes.rb and create an initializer 
+The plaid_rails:install task does the following:
+
+* add the plaid_rails engine to the config/routes.rb 
 config/initializer/plaid.rb
 ```ruby
 mount PlaidRails::Engine => '/plaid', as: :plaid_rails` to the config/routes.rb
 ```
+* Create the initializer config/initializer/plaid.rb.  Be sure to update this with your settings
+* Update the app/assets/javascript/application.js with `//= require plaid_rails`
 
-Update the config/initializer/plaid.rb configuration for your application.
 
 ### Views
 
 Add a button and javascript to your view to use [Link](https://plaid.com/docs/#link) with Plaid.
 
 ```ruby
-<button id="plaidLinkButton" class="small">Link your Bank Account</button>
-
-
-<div id="plaid-data"
+<button id="plaidLinkButton" class="small"
      data-client-name="<%= client_name %>"
      data-env="<%= Rails.env.production? ? "production" : "tartan"%>"
      data-key="<%=  PlaidRails.public_key %>"
      data-webhook="<%=  PlaidRails.webhook %>"
      data-owner-type="<%=  owner.class.name %>"
-     data-owner-id="<%=  owner.id %>">
-</div>
+     data-owner-id="<%=  owner.id %>">Link your Bank Account</button>
 
 <!-- put at bottom of page -->
 <%=javascript_include_tag "https://cdn.plaid.com/link/stable/link-initialize.js" %>
-<%=javascript_include_tag "plaid_rails/link.js" %>
 ```
 
 Overwrite the plaid_rails views with your own views.
@@ -66,5 +70,5 @@ The plaid webhooks runs subscribers for to process transactions and report error
 * webhook.updated - code 4
 * plaid.error - any other code
 
-Update the PlaidRails.configuration.webhook with  the address of the webhook url.  The route is `plaid_rails/webhook`
+Update the PlaidRails.configuration.webhook with  the address of the webhook url.  The route is `plaid/webhook`
 i.e. http(s)://my.app.com/plaid/webhooks 
