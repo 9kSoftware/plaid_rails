@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = "plaid_rails"
   s.version     = PlaidRails::VERSION
   s.authors     = ["Curt Wilhelm"]
-  s.email       = ["curt_wilhelm@yahoo.com"]
+  s.email       = ["curt@9ksoftware.com"]
   s.homepage    = "https://github.com/cdwilhelm/plaid_rails"
   s.summary     = "A Rails Engine to work with Plaid"
   s.description = "A Rails Engine to work with Plaid"
