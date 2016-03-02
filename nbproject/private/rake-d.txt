@@ -75,6 +75,7 @@ app\:spec=Run all specs in spec directory (excluding plugin specs)
 app\:spec\:controllers=Run the code examples in spec/controllers
 app\:spec\:models=Run the code examples in spec/models
 app\:spec\:prepare=
+app\:spec\:services=Run the code examples in spec/services
 app\:spec\:statsetup=
 app\:stats=Report code statistics (KLOCs, etc) from the application
 app\:time\:zones\:all=Displays all time zones, also available: time:zones:us, time:zones:local -- filter with OFFSET parameter, e.g., OFFSET=-6
@@ -86,7 +87,7 @@ app\:tmp\:create=Creates tmp directories for sessions, cache, sockets, and pids
 app\:tmp\:pids\:clear=
 app\:tmp\:sessions\:clear=
 app\:tmp\:sockets\:clear=
-build=Build plaid_rails-0.0.1.gem into the pkg directory.
+build=Build plaid_rails-0.0.2.gem into the pkg directory.
 clobber=
 clobber_rdoc=Remove RDoc HTML files
 db\:create=Create the database from config/database.yml for the current Rails.env (use db:create:all to create all databases in the config)
@@ -115,11 +116,11 @@ doc/app/created.rid=
 environment=
 html=
 html/created.rid=
-install=Build and install plaid_rails-0.0.1.gem into system gems.
+install=Build and install plaid_rails-0.0.2.gem into system gems.
 load_app=
 rdoc=Build RDoc HTML files
 rdoc/created.rid=
-release=Create tag v0.0.1 and build and push plaid_rails-0.0.1.gem to Rubygems\nTo prevent publishing in Rubygems use `gem_push=no rake release`
+release=Create tag v0.0.2 and build and push plaid_rails-0.0.2.gem to Rubygems\nTo prevent publishing in Rubygems use `gem_push=no rake release`
 release\:guard_clean=
 release\:rubygem_push=
 release\:source_control_push=

@@ -10,7 +10,8 @@ module PlaidRails
           "type"=> 'wells',
           "name"=> 'Wells Fargo',
           "owner_id"=> 1,
-          "owner_type"=> "User"
+          "owner_type"=> "User",
+          "token"=>'test,wells,connected'
     }
     }
   

@@ -2,6 +2,7 @@ class CreatePlaidRailsAccounts < ActiveRecord::Migration
   def change
     create_table :plaid_rails_accounts do |t|
       t.string :access_token
+      t.string :token
       t.string :plaid_type
       t.string :name
       t.string :bank_name
@@ -13,6 +14,7 @@ class CreatePlaidRailsAccounts < ActiveRecord::Migration
       t.decimal :current_balance, :precision => 10, :scale => 2
       t.decimal :available_balance, :precision => 10, :scale => 2
       t.string :error
+
       t.timestamps
     end
     add_index :plaid_rails_accounts, :access_token

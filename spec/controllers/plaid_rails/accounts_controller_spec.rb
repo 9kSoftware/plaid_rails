@@ -24,7 +24,8 @@ module PlaidRails
     it "can create" do
       accounts = user.accounts.map{|a| a.id}
       post :create, account: {access_token: 'test_wells', account_ids: accounts,
-        name:'Wells Fargo', type: 'wells', owner_id: "1", owner_type: "User"}
+        name:'Wells Fargo', type: 'wells', owner_id: "1", owner_type: "User",
+        token: public_token}
       expect(response).to be_success
       expect(assigns(:accounts).size).to eq 4
     end

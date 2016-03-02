@@ -33,7 +33,7 @@ module PlaidRails
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:access_token, :type,:name,:owner_id,:owner_type,account_ids:[])
+      params.require(:account).permit(:token,:access_token, :type,:name,:owner_id,:owner_type,account_ids:[])
     end
   end
 end
