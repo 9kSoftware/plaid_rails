@@ -1,7 +1,7 @@
 Plaid.config do |p|
-  Plaid.customer_id = Rails.application.secrets[:plaid][:customer_id]
-  Plaid.secret =  Rails.application.secrets[:plaid][:secret]
-  Plaid.environment_location = Rails.env.production? ? 'https://api.plaid.com/' : 'https://tartan.plaid.com/'
+  p.customer_id = Rails.application.secrets[:plaid][:customer_id]
+  p.secret =  Rails.application.secrets[:plaid][:secret]
+  p.environment_location = Rails.env.production? ? 'https://api.plaid.com/' : 'https://tartan.plaid.com/'
 end
 PlaidRails.configure do |config|
   config.public_key =  Rails.application.secrets[:plaid][:public_key]
