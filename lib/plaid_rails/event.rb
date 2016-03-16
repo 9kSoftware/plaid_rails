@@ -3,7 +3,7 @@ require "active_support/notifications"
 module PlaidRails
   module Event
     class << self
-      attr_accessor :adapter, :backend, :event_retriever, :namespace, :authentication_secret
+      attr_accessor :adapter, :backend, :namespace
 
       def configure(&block)
         raise ArgumentError, "must provide a block" unless block_given?
@@ -69,7 +69,6 @@ module PlaidRails
 
     self.adapter = NotificationAdapter
     self.backend = ActiveSupport::Notifications
-    # self.event_retriever = lambda { |params| PlaidRails::Event.retrieve(params[:webhooks][:access_token]) }
     self.namespace = Namespace.new("plaid_rails", ".")
   end
 end
