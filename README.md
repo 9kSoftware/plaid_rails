@@ -46,6 +46,7 @@ Add a button and javascript to your view to use [Link](https://plaid.com/docs/#l
      data-env="<%= Rails.env.production? ? "production" : "tartan"%>"
      data-key="<%=  PlaidRails.public_key %>"
      data-webhook="<%=  PlaidRails.webhook %>"
+     data-longtail="<%=  PlaidRails.longtail %>"
      data-owner-type="<%=  owner.class.name %>"
      data-owner-id="<%=  owner.id %>">Link your Bank Account</button>
 

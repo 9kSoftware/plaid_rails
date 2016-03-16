@@ -10,7 +10,7 @@ module PlaidRails
       :environment_location,
       :public_key,
       :webhook,
-      :long_tail,
+      :longtail,
       :env
    
     

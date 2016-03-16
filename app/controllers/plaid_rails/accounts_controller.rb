@@ -9,9 +9,9 @@ module PlaidRails
     
     # display list of accounts for authenticated user
     def new
-      @user = Plaid.set_user(account_params[:access_token], ['auth'])
+      @user = Plaid.set_user(account_params[:access_token], ['connect'])
       # Retrieve the user's accounts
-      @user.get('auth')
+      #@user.get('auth')
       @accounts = @user.accounts
     end
     
