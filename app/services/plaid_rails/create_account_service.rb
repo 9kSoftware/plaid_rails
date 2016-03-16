@@ -23,8 +23,8 @@ module PlaidRails
         ) unless PlaidRails::Account.exists?(plaid_id: id)
       end
       
-      owner = eval(account_params["owner_type"]).find(account_params["owner_id"])
-      PlaidRails::Account.where(owner: owner )
+      PlaidRails::Account.where(owner_id: account_params["owner_id"], 
+        owner_type: account_params["owner_type"])
     end
   end
 end

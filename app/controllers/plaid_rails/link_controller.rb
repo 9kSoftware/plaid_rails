@@ -18,11 +18,10 @@ module PlaidRails
     
     def update
       begin
-        owner = eval(link_params[:owner_type]).find(link_params[:owner_id])
-        
         exchange_token = Plaid.exchange_token(link_params[:public_token])
 
-        @accounts =PlaidRails::Account.where(owner: owner)
+        @accounts =PlaidRails::Account.where(owner_type: link_params[:owner_type],
+        owner_id: link_params[:owner_id])
         @accounts.each do |account|
           account.update(access_token: exchange_token.access_token)
         end
