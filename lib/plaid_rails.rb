@@ -11,6 +11,7 @@ module PlaidRails
       :public_key,
       :webhook,
       :long_tail
+      :env
    
     
     def configure(&block)
@@ -30,20 +31,5 @@ module PlaidRails
       PlaidRails::Event.all(callable)
     end
     
-#    class Retriever
-#      def self.call(params)
-#        #return nil if StripeWebhook.exists?(stripe_id: params[:id])
-#        Webhook.create!(params: params)
-#        # event = Stripe::Event.retrieve(params[:id], { api_key: Payola.secret_key })
-#        #Payola.event_filter.call(event)
-#      end
-#    end
-    
-    def reset!
-      #PlaidRails::Event.event_retriever = Retriever
-      
-    end
   end
-  
-  self.reset!
 end

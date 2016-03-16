@@ -6,6 +6,7 @@ end
 PlaidRails.configure do |config|
   config.public_key =  Rails.application.secrets[:plaid][:public_key]
   config.long_tail = true
+  config.env =  Rails.env.production? ? "production" : "tartan"
   config.webhook = 'https://my.app.com/plaid/webhooks'
   
   # https://plaid.com/docs/#webhook
