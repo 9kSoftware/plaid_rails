@@ -13,7 +13,7 @@ module PlaidRails
           token: account_params["token"],
           plaid_type: account_params["type"],
           name: account.name,
-          bank_name: account.meta["name"],
+          bank_name: Plaid.institution.find{|i| i.type==account_params["type"]}.name,
           number: account.meta["number"],
           owner_id: account_params["owner_id"],
           owner_type: account_params["owner_type"],

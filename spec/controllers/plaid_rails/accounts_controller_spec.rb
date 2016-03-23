@@ -28,6 +28,7 @@ module PlaidRails
         token: public_token}
       expect(response).to be_success
       expect(assigns(:accounts).size).to eq 4
+      expect(assigns(:accounts).first.bank_name).to eq 'Wells Fargo'
     end
     
     it "can destroy" do
