@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215155024) do
+ActiveRecord::Schema.define(version: 20160323141534) do
 
   create_table "plaid_rails_accounts", force: true do |t|
     t.string   "access_token"
@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20160215155024) do
     t.string   "owner_type"
     t.integer  "owner_id"
     t.datetime "last_sync"
-    t.decimal  "current_balance",   precision: 10, scale: 2
-    t.decimal  "available_balance", precision: 10, scale: 2
+    t.decimal  "current_balance",         precision: 10, scale: 2
+    t.decimal  "available_balance",       precision: 10, scale: 2
     t.string   "error"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "transactions_start_date"
   end
 
   add_index "plaid_rails_accounts", ["access_token"], name: "index_plaid_rails_accounts_on_access_token"

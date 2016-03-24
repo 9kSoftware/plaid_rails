@@ -87,7 +87,7 @@ app\:tmp\:create=Creates tmp directories for sessions, cache, sockets, and pids
 app\:tmp\:pids\:clear=
 app\:tmp\:sessions\:clear=
 app\:tmp\:sockets\:clear=
-build=Build plaid_rails-0.0.2.gem into the pkg directory.
+build=Build plaid_rails-0.1.0.gem into the pkg directory.
 clobber=
 clobber_rdoc=Remove RDoc HTML files
 db\:create=Create the database from config/database.yml for the current Rails.env (use db:create:all to create all databases in the config)
@@ -116,11 +116,11 @@ doc/app/created.rid=
 environment=
 html=
 html/created.rid=
-install=Build and install plaid_rails-0.0.2.gem into system gems.
+install=Build and install plaid_rails-0.1.0.gem into system gems.
 load_app=
 rdoc=Build RDoc HTML files
 rdoc/created.rid=
-release=Create tag v0.0.2 and build and push plaid_rails-0.0.2.gem to Rubygems\nTo prevent publishing in Rubygems use `gem_push=no rake release`
+release=Create tag v0.1.0 and build and push plaid_rails-0.1.0.gem to Rubygems\nTo prevent publishing in Rubygems use `gem_push=no rake release`
 release\:guard_clean=
 release\:rubygem_push=
 release\:source_control_push=
