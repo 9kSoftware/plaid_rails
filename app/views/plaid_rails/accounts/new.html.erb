@@ -7,6 +7,7 @@
   <%= hidden_field_tag "account[type]", params["type"] %>
   <%= hidden_field_tag "account[owner_id]", params["owner_id"] %>
   <%= hidden_field_tag "account[owner_type]", params["owner_type"] %>
+  <%= label_tag "start_date" %> <%= date_field_tag "account[transactions_start_date]" %>
   <% @accounts.each_with_index do |account,index| %>
     <%= check_box_tag "account[account_ids][]", account.id,nil,{id: "account_account_ids_#{index}"}%> 
     <label for="account_account_ids_<%=index%>"> <%= "#{account.meta["name"]} - #{account.meta["number"]}"%></label><br/>
