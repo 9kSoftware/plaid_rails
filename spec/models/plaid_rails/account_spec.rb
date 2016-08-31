@@ -17,23 +17,22 @@ module PlaidRails
     
     it "delete connect with error" do
       account = FactoryGirl.create(:account)
-      expect(Plaid::Connection).to receive(:delete).with('connect', 
-        { access_token: 'test_wells'}).and_raise("boom")
+      expect(Plaid::User).to receive(:load).with(:connect, "test_wells").and_raise("boom")
       expect(Rails.logger).to receive(:error).exactly(2).times
       account.send(:delete_connect)
     end
     
     it "delete_connect" do
       account = FactoryGirl.create(:account)
-      expect(Plaid::Connection).to receive(:delete).with('connect', 
-        { access_token: 'test_wells'})
+      user = double
+      expect(Plaid::User).to receive(:load).with(:connect, "test_wells").and_return(user)
+      expect(user).to receive(:delete)
       account.send(:delete_connect)
     end
     
     it "does not delete_connect" do
       FactoryGirl.create(:account)
-      expect(Plaid::Connection).to_not receive(:delete).with('connect', 
-        { access_token: 'test_wells'})
+      expect(Plaid::User).to_not receive(:load).with(:connect, "test_wells").and_raise("boom")      
       account.send(:delete_connect)
     end
   end

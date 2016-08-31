@@ -16,7 +16,8 @@ module PlaidRails
       token = self.access_token
       begin
         if PlaidRails::Account.where(access_token: token).size == 1
-          Plaid::Connection.delete('connect', { access_token: token})
+          user = Plaid::User.load(:connect, token)
+          user.delete
         end
       rescue  => e
         message = "Unable to delete token #{token}"

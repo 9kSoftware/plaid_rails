@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.1"
   s.add_dependency "jquery-rails"
-  s.add_dependency "plaid"
+  s.add_dependency "plaid", "~> 2.0.0"
   
   s.add_development_dependency "sqlite3"
   s.add_development_dependency 'rspec-rails'

@@ -5,7 +5,7 @@ module PlaidRails
 
     def authenticate
       begin
-        @exchange_token = Plaid.exchange_token(link_params[:public_token])
+        @exchange_token = Plaid::User.exchange_token(link_params[:public_token])
 
         @params = link_params.merge!(token: link_params[:public_token])
         
@@ -18,7 +18,7 @@ module PlaidRails
     
     def update
       begin
-        exchange_token = Plaid.exchange_token(link_params[:public_token])
+        exchange_token = Plaid::User.exchange_token(link_params[:public_token])
 
         @accounts =PlaidRails::Account.where(owner_type: link_params[:owner_type],
         owner_id: link_params[:owner_id])

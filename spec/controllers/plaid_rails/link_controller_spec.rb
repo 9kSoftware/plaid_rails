@@ -16,7 +16,7 @@ module PlaidRails
         owner_id: "1", owner_type: "User"
       expect(response).to_not be_success
       expect(response.status).to eq 500
-      expect(response.body).to eq "unauthorized product"
+      expect(response.body).to include "unauthorized product"
     end
     
     it "update with public token" do

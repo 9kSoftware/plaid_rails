@@ -2,7 +2,7 @@ require 'spec_helper'
 module PlaidRails
   describe CreateAccountService do
   
-    let(:user){Plaid.set_user('test_wells', ['auth'])}
+    let(:user){Plaid::User.create(:connect, 'wells', 'plaid_test', 'plaid_good')}
   
     let(:account_params){{
           "account_ids"=> user.accounts.map{|a| a.id},

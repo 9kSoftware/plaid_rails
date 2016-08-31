@@ -5,7 +5,7 @@ module PlaidRails
     routes { PlaidRails::Engine.routes }
     let(:account){create(:account)}
     let(:public_token){'test,wells,connected'}
-    let(:user){Plaid.set_user('test_wells', ['auth'])}
+    let(:user){Plaid::User.load(:connect, 'test_wells').upgrade(:info)}
     
     it "get index" do
       get :index, account:{owner_id: 1}

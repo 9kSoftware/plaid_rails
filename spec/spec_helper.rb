@@ -9,9 +9,9 @@ require 'webmock/rspec'
 
 WebMock.allow_net_connect!
 Plaid.config do |p|
-  p.customer_id = 'test_id'
+  p.client_id = 'test_id'
   p.secret = 'test_secret'
-  p.environment_location = 'https://tartan.plaid.com/'
+  p.env = :tartan
 end
 Rails.backtrace_cleaner.remove_silencers!
 # Load support files

@@ -5,7 +5,9 @@ module PlaidRails
     def self.call(account_params)
       account_params["account_ids"].each  do |id|
         # set Plaid::User
-        user = Plaid.set_user(account_params["access_token"],['connect'])
+        user = Plaid::User.load(:connect, account_params["access_token"])
+        # get all the info, make plaid /connect/get call
+        user.transactions
         #find the account by account_id 
         account = user.accounts.find{|a| a.id==id}
         PlaidRails::Account.create!(
@@ -13,7 +15,7 @@ module PlaidRails
           token: account_params["token"],
           plaid_type: account_params["type"],
           name: account.name,
-          bank_name: Plaid.institution.find{|i| i.type==account_params["type"]}.name,
+          bank_name: Plaid::LongTailInstitution.get(account_params["type"]).name,
           number: account.meta["number"],
           owner_id: account_params["owner_id"],
           owner_type: account_params["owner_type"],
