@@ -12,7 +12,6 @@ module PlaidRails
       account_params["access_token"]
       @user = Plaid::User.load(:connect, account_params["access_token"])
       @user.transactions
-      puts "@user #{@user.inspect}"
       @accounts = @user.accounts
     end
     
