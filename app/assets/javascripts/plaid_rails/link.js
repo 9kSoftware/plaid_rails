@@ -19,7 +19,6 @@ function getPlaid(plaidData) {
         key: plaidData.data('key'),
         product: 'connect',
         webhook: plaidData.data('webhook'),
-        longtail: plaidData.data('longtail'),
         onLoad: function () {
             // The Link module finished loading.
         },
