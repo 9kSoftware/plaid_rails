@@ -1,6 +1,6 @@
 # Plaid for Rails
 
-[ ![Codeship Status for cdwilhelm/plaid_rails](https://codeship.com/projects/0ffcd970-b638-0133-0560-5ef9b905983d/status?branch=master)](https://codeship.com/projects/134308)
+[![Build Status](https://travis-ci.org/9kSoftware/plaid_rails.svg?branch=master)](https://travis-ci.org/9kSoftware/plaid_rails)
 
 This gem is a Rails Engine to provide an interface to [Plaid](http://plaid.com) using the plaid-ruby api
 
