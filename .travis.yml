@@ -8,4 +8,4 @@ script:
 before_script:
   - gem install bundler
   - bundle install
-  - RAILS_ENV=test rake app:db:create app:db:migrate
+  - bundle exec  rake app:db:create app:db:migrate RAILS_ENV=test

@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160323141534) do
   add_index "plaid_rails_accounts", ["owner_id"], name: "index_plaid_rails_accounts_on_owner_id"
   add_index "plaid_rails_accounts", ["plaid_id"], name: "index_plaid_rails_accounts_on_plaid_id"
 
-  create_table "plaid_rails_webhooks", force: true do |t|
+  create_table "webhooks", force: true do |t|
     t.integer  "code"
     t.string   "message"
     t.string   "access_token"
