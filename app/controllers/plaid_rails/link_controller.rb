@@ -20,9 +20,9 @@ module PlaidRails
       begin
         exchange_token = Plaid::User.exchange_token(link_params[:public_token])
 
-        @accounts =PlaidRails::Account.where(owner_type: link_params[:owner_type],
+        @plaid_accounts =PlaidRails::Account.where(owner_type: link_params[:owner_type],
         owner_id: link_params[:owner_id])
-        @accounts.each do |account|
+        @plaid_accounts.each do |account|
           account.update(access_token: exchange_token.access_token)
         end
         flash[:success]="You have successfully updated your account(s)"

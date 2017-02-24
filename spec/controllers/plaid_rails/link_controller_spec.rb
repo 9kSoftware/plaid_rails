@@ -24,7 +24,7 @@ module PlaidRails
       xhr :post, :update, public_token: 'test,wells,connected', name:'Wells Fargo', type: 'wells',
         owner_id: "1", owner_type: "User"
       expect(response).to be_success
-      expect(assigns(:accounts)).to_not be_nil
+      expect(assigns(:plaid_accounts)).to_not be_nil
       expect(response).to render_template('plaid_rails/link/update')
     end
     it {

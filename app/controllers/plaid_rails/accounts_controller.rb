@@ -4,7 +4,7 @@ module PlaidRails
   class AccountsController < ApplicationController
     
     def index
-      @accounts =PlaidRails::Account.where(owner_id: account_params[:owner_id])
+      @plaid_accounts =PlaidRails::Account.where(owner_id: account_params[:owner_id])
     end
     
     # display list of accounts for authenticated user
@@ -12,12 +12,12 @@ module PlaidRails
       account_params["access_token"]
       @user = Plaid::User.load(:connect, account_params["access_token"])
       @user.transactions
-      @accounts = @user.accounts
+      @plaid_accounts = @user.accounts
     end
     
     #create new bank account and return all the accounts for the owner
     def create
-      @accounts = PlaidRails::CreateAccountService.call(account_params)
+      @plaid_accounts = PlaidRails::CreateAccountService.call(account_params)
     end
     
     def update
@@ -25,8 +25,8 @@ module PlaidRails
     end
     
     def destroy
-      account = PlaidRails::Account.find(params[:id])
-      account.destroy
+      @plaid_account = PlaidRails::Account.find(params[:id])
+      @plaid_account.destroy
     end
     
     private

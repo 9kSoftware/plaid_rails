@@ -10,7 +10,7 @@ module PlaidRails
     it "get index" do
       get :index, account:{owner_id: 1}
       expect(response).to be_success
-      expect(assigns(:accounts)).to eq [account]
+      expect(assigns(:plaid_accounts)).to eq [account]
         
     end
       
@@ -18,7 +18,7 @@ module PlaidRails
       get :new, account:{access_token: 'test_wells', name:'Wells Fargo', type: 'wells',
         owner_id: "1", owner_type: "User"}
       expect(response).to be_success
-      expect(assigns(:accounts)).to_not be_nil
+      expect(assigns(:plaid_accounts)).to_not be_nil
     end
     
     it "can create" do
@@ -27,13 +27,14 @@ module PlaidRails
         name:'Wells Fargo', type: 'wells', owner_id: "1", owner_type: "User",
         token: public_token}
       expect(response).to be_success
-      expect(assigns(:accounts).size).to eq 4
-      expect(assigns(:accounts).first.bank_name).to eq 'Wells Fargo'
+      expect(assigns(:plaid_accounts).size).to eq 4
+      expect(assigns(:plaid_accounts).first.bank_name).to eq 'Wells Fargo'
     end
     
     it "can destroy" do
       delete :destroy, id: account.id
       expect(response).to be_success
+      expect(assigns(:plaid_account)).to eq account
     end
     
     #    it {
