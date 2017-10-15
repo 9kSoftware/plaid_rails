@@ -23,7 +23,8 @@ module PlaidRails
         @plaid_accounts =PlaidRails::Account.where(owner_type: link_params[:owner_type],
         owner_id: link_params[:owner_id])
         @plaid_accounts.each do |account|
-          account.update(access_token: exchange_token.access_token)
+          account.update(access_token: exchange_token.access_token, 
+            transactions_start_date: Date.today)
         end
         flash[:success]="You have successfully updated your account(s)"
       rescue => e
