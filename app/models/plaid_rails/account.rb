@@ -3,6 +3,7 @@ module PlaidRails
     belongs_to :owner, polymorphic: true, foreign_key: :owner_id
     
     before_destroy :delete_connect
+    before_save :delete_connect, if: Proc.new{|a| a.access_token_changed? and !a.new_record?}
     
     validates :plaid_id, presence: true
     validates :name, presence: true

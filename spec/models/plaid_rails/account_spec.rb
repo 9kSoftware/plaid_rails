@@ -35,5 +35,14 @@ module PlaidRails
       expect(Plaid::User).to_not receive(:load).with(:connect, "test_wells").and_raise("boom")      
       account.send(:delete_connect)
     end
+    
+    it "before_save delete_connect" do
+      expect(account).to receive(:delete_connect)
+      account.update(access_token: 'foobar')
+    end
+   it "does not before_save delete_connect" do
+      expect(account).to_not receive(:delete_connect)
+      account.update(last_sync: Time.now)
+    end
   end
 end
