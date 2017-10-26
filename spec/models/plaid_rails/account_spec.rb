@@ -18,7 +18,7 @@ module PlaidRails
     it "delete connect with error" do
       account = FactoryGirl.create(:account)
       expect(Plaid::User).to receive(:load).with(:connect, "test_wells").and_raise("boom")
-      expect(Rails.logger).to receive(:error).exactly(2).times
+      expect(Rails.logger).to receive(:error).exactly(1).times
       account.send(:delete_connect)
     end
     
@@ -26,6 +26,7 @@ module PlaidRails
       account = FactoryGirl.create(:account)
       user = double
       expect(Plaid::User).to receive(:load).with(:connect, "test_wells").and_return(user)
+      expect(user).to receive(:transactions).and_return([1])
       expect(user).to receive(:delete)
       account.send(:delete_connect)
     end
@@ -33,14 +34,20 @@ module PlaidRails
     it "does not delete_connect" do
       FactoryGirl.create(:account)
       expect(Plaid::User).to_not receive(:load).with(:connect, "test_wells").and_raise("boom")      
-      account.send(:delete_connect)
     end
     
-    it "before_save delete_connect" do
+    it "does not delete_connect without transactions" do
+      user = double
+      expect(Plaid::User).to receive(:load).with(:connect, "test_wells").and_return(user)
+      expect(user).to receive(:transactions).and_return([])
+      account.update(access_token: 'foobar')
+    end
+    
+    it "before_update delete_connect" do
       expect(account).to receive(:delete_connect)
       account.update(access_token: 'foobar')
     end
-   it "does not before_save delete_connect" do
+    it "does not before_save delete_connect" do
       expect(account).to_not receive(:delete_connect)
       account.update(last_sync: Time.now)
     end
