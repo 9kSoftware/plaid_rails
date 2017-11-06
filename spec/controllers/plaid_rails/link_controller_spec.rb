@@ -22,7 +22,7 @@ module PlaidRails
     it "update with public token" do
       account = create(:account, transactions_start_date: Date.today - 3)
       xhr :post, :update, public_token: 'test,wells,connected', name:'Wells Fargo', type: 'wells',
-        owner_id: "1", owner_type: "User"
+        owner_id: "1", owner_type: "User", number: 1234
       expect(response).to be_success
       expect(assigns(:plaid_accounts)).to_not be_nil
       expect(assigns(:plaid_accounts).first.transactions_start_date).to eq Date.today

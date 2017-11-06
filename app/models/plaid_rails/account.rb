@@ -2,43 +2,56 @@ module PlaidRails
   class Account < ActiveRecord::Base
     belongs_to :owner, polymorphic: true, foreign_key: :owner_id
     
-    before_destroy :delete_connect
-    before_update :delete_connect, if: :access_token_changed?
+    before_destroy :delete_connect, :unless=> :accounts_with_same_token?
+    before_update :delete_updated_token, :if=> :access_token_changed?
     
-      validates :plaid_id, presence: true
-      validates :name, presence: true
-      validates :access_token, presence: true
-      validates :plaid_type, presence: true
+    validates :plaid_id, presence: true
+    validates :name, presence: true
+    validates :access_token, presence: true
+    validates :plaid_type, presence: true
     
-      private
+    private
     
-      # delete token from Plaid if there are no more accounts for this token
-      def delete_connect
-        # check if access token changed and use that token 
-        # means the bank password was changed
-        if self.access_token_changed?
-          token = self.access_token_was 
-        else
-          token = self.access_token
-        end
-        
-        # hide full token from logs
-        token_last_8 =  token[-8..-1]
-        
-        Rails.logger.debug "Deleting Plaid User with token #{token_last_8}"
-        begin
-          if PlaidRails::Account.where(access_token: token).size > 0
-            user = Plaid::User.load(:connect, token)
-            # skip delete if there are no transactions
-            if user.transactions.any?
-              user.delete 
-              Rails.logger.debug "Deleted Plaid User with token #{token_last_8}"
-            end
-          end
-        rescue  => e
-          message = "Unable to delete user with token #{token_last_8}"
-          Rails.logger.error "#{message}: #{e.message}"
-        end
+    # delete token from Plaid if there are no more accounts for this token
+    def delete_updated_token
+      # change all matching tokens on update
+      accounts = PlaidRails::Account.where(access_token: my_token)
+      if  accounts.size > 0
+        delete_connect
       end
     end
+    
+    # delete Plaid user  
+    def delete_connect
+      begin
+        Rails.logger.info "Deleting Plaid User with token #{token_last_8}"
+        user = Plaid::User.load(:connect, my_token)
+        # skip delete if there are no transactions
+        if user.transactions.any?
+          user.delete 
+          Rails.logger.info "Deleted Plaid User with token #{token_last_8}"
+        end
+      rescue  => e
+        message = "Unable to delete user with token #{token_last_8}"
+        Rails.logger.error "#{message}: #{e.message}"
+      end
+    end
+      
+    # check if access token changed and use that token 
+    # means the bank password was changed
+    # return token changed token if it was changed
+    def my_token
+      self.access_token_changed? ? self.access_token_was : self.access_token
+    end
+      
+    # hide full token from logs
+    def token_last_8
+      my_token[-8..-1]
+    end
+    
+    # are there more accounts that use the same token
+    def accounts_with_same_token?
+      PlaidRails::Account.where(access_token: my_token).size > 1
+    end
   end
+end

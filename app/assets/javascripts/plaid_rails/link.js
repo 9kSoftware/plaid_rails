@@ -35,7 +35,8 @@ function getPlaid(plaidData) {
                     name: metadata.institution.name,
                     type: metadata.institution.type,
                     owner_type: plaidData.data('owner-type'),
-                    owner_id: plaidData.data('owner-id')
+                    owner_id: plaidData.data('owner-id'),
+                    number: plaidData.data('number')
                 }
             });
         },

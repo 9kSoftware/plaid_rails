@@ -7,6 +7,7 @@ FactoryGirl.define do
     owner_type "User"
     owner_id 1
     bank_name "Wells Fargo"
+    number 1234
   end
 
 end
