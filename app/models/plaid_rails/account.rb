@@ -8,7 +8,6 @@ module PlaidRails
     validates :plaid_id, presence: true
     validates :name, presence: true
     validates :access_token, presence: true
-    validates :plaid_type, presence: true
     
     private
     
@@ -25,10 +24,13 @@ module PlaidRails
     def delete_connect
       begin
         Rails.logger.info "Deleting Plaid User with token #{token_last_8}"
-        user = Plaid::User.load(:connect, my_token)
+        client = Plaid::Client.new(env: PlaidRails.env,
+          client_id: PlaidRails.client_id,
+          secret: PlaidRails.secret,
+          public_key: PlaidRails.public_key)
         # skip delete if there are no transactions
-        if user.transactions.any?
-          user.delete 
+        if client.transactions.any?
+          client.item.remove(access_token)
           Rails.logger.info "Deleted Plaid User with token #{token_last_8}"
         end
       rescue  => e

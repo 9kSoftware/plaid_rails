@@ -9,15 +9,16 @@ function getPlaid(plaidData) {
         url = '/plaid/update';
     }
     // set token for test environment
-    if (env === 'tartan' && typeof plaidData.data('type') !== 'undefined') {
+    if (env === 'sandbox' && typeof plaidData.data('type') !== 'undefined') {
         token = 'test,' + plaidData.data('type') + ',connected'
     }
 
     var linkHandler = Plaid.create({
         env: env,
+        apiVersion: 'v2',
         clientName: plaidData.data('client-name'),
         key: plaidData.data('key'),
-        product: 'connect',
+        product: ['auth','transactions'],
         webhook: plaidData.data('webhook'),
         onLoad: function () {
             // The Link module finished loading.
@@ -32,11 +33,11 @@ function getPlaid(plaidData) {
                 url: url,
                 data: {
                     public_token: public_token,
-                    name: metadata.institution.name,
-                    type: metadata.institution.type,
+                    name: metadata.account.name,
+                    type: metadata.account.type,
                     owner_type: plaidData.data('owner-type'),
                     owner_id: plaidData.data('owner-id'),
-                    number: plaidData.data('number')
+                    number: metadata.account.mask
                 }
             });
         },

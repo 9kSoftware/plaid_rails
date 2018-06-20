@@ -5,7 +5,7 @@ require "plaid"
 module PlaidRails
   
   class << self
-    attr_accessor :customer_id,
+    attr_accessor :client_id,
       :secret,
       :environment_location,
       :public_key,

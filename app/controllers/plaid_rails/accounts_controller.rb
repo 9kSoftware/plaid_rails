@@ -9,10 +9,14 @@ module PlaidRails
     
     # display list of accounts for authenticated user
     def new
-      account_params["access_token"]
-      @user = Plaid::User.load(:connect, account_params["access_token"])
-      @user.transactions
-      @plaid_accounts = @user.accounts
+      client = Plaid::Client.new(env: PlaidRails.env,
+                  client_id: PlaidRails.client_id,
+                  secret: PlaidRails.secret,
+                  public_key: PlaidRails.public_key)
+
+      response = client.accounts.get(account_params["access_token"])
+      @plaid_accounts = response.accounts
+      
     end
     
     #create new bank account and return all the accounts for the owner

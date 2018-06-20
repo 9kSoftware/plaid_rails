@@ -4,8 +4,12 @@ module PlaidRails
   describe AccountsController do
     routes { PlaidRails::Engine.routes }
     let(:account){create(:account)}
-    let(:public_token){'test,wells,connected'}
-    let(:user){Plaid::User.load(:connect, 'test_wells').upgrade(:info)}
+    let(:public_token){create_public_token}
+    let(:client){Plaid::Client.new(env: PlaidRails.env,
+                  client_id: PlaidRails.client_id,
+                  secret: PlaidRails.secret,
+                  public_key: PlaidRails.public_key)}
+    let(:access_token){create_access_token}
     
     it "get index" do
       get :index, account:{owner_id: 1}
@@ -15,20 +19,21 @@ module PlaidRails
     end
       
     it "get new" do
-      get :new, account:{access_token: 'test_wells', name:'Wells Fargo', type: 'wells',
+      get :new, account:{access_token: access_token, name:'Wells Fargo', type: 'wells',
         owner_id: "1", owner_type: "User"}
       expect(response).to be_success
       expect(assigns(:plaid_accounts)).to_not be_nil
+      expect(assigns(:plaid_accounts).first.name).to eq('Plaid Checking')
     end
     
     it "can create" do
-      accounts = user.accounts.map{|a| a.id}
-      post :create, account: {access_token: 'test_wells', account_ids: accounts,
+      accounts = client.accounts.get(access_token).accounts.map{|a| a.account_id}
+      post :create, account: {access_token: access_token, account_ids: accounts,
         name:'Wells Fargo', type: 'wells', owner_id: "1", owner_type: "User",
         token: public_token}
       expect(response).to be_success
       expect(assigns(:plaid_accounts).size).to eq 4
-      expect(assigns(:plaid_accounts).first.bank_name).to eq 'Wells Fargo'
+      expect(assigns(:plaid_accounts).first.name).to  eq('Plaid Checking')
     end
     
     it "can destroy" do
@@ -36,13 +41,6 @@ module PlaidRails
       expect(response).to be_success
       expect(assigns(:plaid_account)).to eq account
     end
-    
-    #    it {
-    #      should permit(:access_token, :type,:name,:owner_id,:owner_type,:account_id).
-    #        for(:create, params: {access_token: 'test_wells', account_id: '1', 
-    #          name: 'name'})}
-    #    it {
-    #      should permit(:token, :type,:name,:owner_id,:owner_type).
-    #        for(:new, verb: :get, params: {access_token: 'test_wells'})}
+
   end
 end

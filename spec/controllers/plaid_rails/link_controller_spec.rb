@@ -3,9 +3,11 @@ require 'spec_helper'
 module PlaidRails
   describe LinkController do
     routes { PlaidRails::Engine.routes }
-   
+    render_views
+    let(:public_token){create_public_token}
+    
     it "authenticate with public token" do
-      xhr :post, :authenticate, public_token: 'test,wells,connected', name:'Wells Fargo', type: 'wells',
+      xhr :post, :authenticate, public_token: public_token, name:'Wells Fargo', type: 'wells',
         owner_id: "1", owner_type: "User"
       expect(response).to be_success
       expect(response).to render_template('plaid_rails/link/authenticate')
@@ -16,12 +18,12 @@ module PlaidRails
         owner_id: "1", owner_type: "User"
       expect(response).to_not be_success
       expect(response.status).to eq 500
-      expect(response.body).to include "unauthorized product"
+      expect(response.body).to include "INVALID_PUBLIC_TOKEN"
     end
     
     it "update with public token" do
       account = create(:account, transactions_start_date: Date.today - 3)
-      xhr :post, :update, public_token: 'test,wells,connected', name:'Wells Fargo', type: 'wells',
+      xhr :post, :update, public_token: public_token, name:'Wells Fargo', type: 'wells',
         owner_id: "1", owner_type: "User", number: 1234
       expect(response).to be_success
       expect(assigns(:plaid_accounts)).to_not be_nil
