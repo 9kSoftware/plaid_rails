@@ -20,6 +20,7 @@ function getPlaid(plaidData) {
         key: plaidData.data('key'),
         product: ['auth','transactions'],
         webhook: plaidData.data('webhook'),
+        token: plaidData.data('token'),
         onLoad: function () {
             // The Link module finished loading.
         },
