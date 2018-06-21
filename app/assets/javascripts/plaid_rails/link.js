@@ -1,16 +1,25 @@
+function getPublicToken(access_token){
+    $.post('/plaid/create_token',
+    {access_token: access_token },
+    function(data,status,xhr){
+        console.log('status:'+status)
+        console.log('data:'+data)
+        return data.public_token
+    },
+    'json'
+    );
+}
 function getPlaid(plaidData) {
     var url = null;
-    var token = plaidData.data('token');
+    var access_token = plaidData.data('access-token');
     var env = plaidData.data('env');
-    if (typeof token === 'undefined') {
+    var token
+    if (typeof access_token === 'undefined') {
         url = '/plaid/authenticate';
         token = null;
     } else {
         url = '/plaid/update';
-    }
-    // set token for test environment
-    if (env === 'sandbox' && typeof plaidData.data('type') !== 'undefined') {
-        token = 'test,' + plaidData.data('type') + ',connected'
+        token = getPublicToken(access_token);
     }
 
     var linkHandler = Plaid.create({
@@ -18,9 +27,9 @@ function getPlaid(plaidData) {
         apiVersion: 'v2',
         clientName: plaidData.data('client-name'),
         key: plaidData.data('key'),
-        product: ['auth','transactions'],
+        product: ['auth', 'transactions'],
         webhook: plaidData.data('webhook'),
-        token: plaidData.data('token'),
+        token: token,
         onLoad: function () {
             // The Link module finished loading.
         },

@@ -3,6 +3,7 @@ require_dependency "plaid_rails/application_controller"
 module PlaidRails
   class LinkController < ApplicationController
 
+    # /plaid/authenticate
     def authenticate
       begin
         client = Plaid::Client.new(env: PlaidRails.env,
@@ -19,6 +20,7 @@ module PlaidRails
     end
     
     # updates the access token after changing password with institution  
+    # /plaid/update
     def update
       begin
         client = Plaid::Client.new(env: PlaidRails.env,
@@ -47,6 +49,21 @@ module PlaidRails
       rescue => e
         Rails.logger.error "Error: #{e}"
         render text: e.message, status: 500
+      end
+    end
+    
+    # creates a new public token
+    # /plaid/create_token
+    def create_token
+      client = Plaid::Client.new(env: PlaidRails.env,
+        client_id: PlaidRails.client_id,
+        secret: PlaidRails.secret,
+        public_key: PlaidRails.public_key)
+      if link_params['access_token']
+      response = client.item.public_token.create(link_params['access_token'])
+      render json: {public_token: response['public_token']}.to_json
+      else
+        render json: {error: 'missing access_token'}.to_json, status: 500
       end
     end
     

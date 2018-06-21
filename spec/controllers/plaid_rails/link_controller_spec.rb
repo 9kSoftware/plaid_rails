@@ -31,6 +31,18 @@ module PlaidRails
       expect(response).to render_template('plaid_rails/link/update')
     end
     
+    it "create public token" do
+      access_token = create_access_token
+      post :create_token, access_token: access_token
+      json = JSON.parse(response.body)
+      expect(json).to include 'public_token'
+    end
+    
+    it "create public token without access_token" do
+      post :create_token
+      expect(response).to_not be_successful
+    end
+    
     it {
       should permit(:public_token, :type,:name,:owner_id,:owner_type).
         for(:authenticate, verb: :post, format: :js)}
