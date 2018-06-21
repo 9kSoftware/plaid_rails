@@ -2,8 +2,6 @@ function getPublicToken(access_token){
     $.post('/plaid/create_token',
     {access_token: access_token },
     function(data,status,xhr){
-        console.log('status:'+status)
-        console.log('data:'+data)
         return data.public_token
     },
     'json'
