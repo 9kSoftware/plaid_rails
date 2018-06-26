@@ -11,7 +11,7 @@ function getPlaid(plaidData) {
     var url = null;
     var access_token = plaidData.data('access-token');
     var env = plaidData.data('env');
-    var token
+    var token;
     if (typeof access_token === 'undefined') {
         url = '/plaid/authenticate';
         token = null;
@@ -59,7 +59,7 @@ function getPlaid(plaidData) {
 $(document).on("click", '#plaidLinkButton', function () {
     var plaidData = $(this);
     linkHandler = getPlaid(plaidData);
-    var plaidType = plaidData.data('type')
+    var plaidType = plaidData.data('type');
     //open handler for the institution
     if (typeof plaidType === 'undefined') {
         linkHandler.open();
