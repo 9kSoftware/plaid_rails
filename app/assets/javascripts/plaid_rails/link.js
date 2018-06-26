@@ -25,7 +25,7 @@ function getPlaid(plaidData) {
         apiVersion: 'v2',
         clientName: plaidData.data('client-name'),
         key: plaidData.data('key'),
-        product: ['auth', 'transactions'],
+        product: 'transactions',
         webhook: plaidData.data('webhook'),
         token: token,
         onLoad: function () {
