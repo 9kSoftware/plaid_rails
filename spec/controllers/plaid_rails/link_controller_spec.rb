@@ -27,7 +27,7 @@ module PlaidRails
         owner_id: "1", owner_type: "User", number: 1234
       expect(response).to be_success
       expect(assigns(:plaid_accounts)).to_not be_nil
-      expect(assigns(:plaid_accounts).first.transactions_start_date).to eq Date.today
+      expect(assigns(:plaid_accounts).first.transactions_start_date).to eq Date.today - 3
       expect(response).to render_template('plaid_rails/link/update')
     end
     
@@ -42,13 +42,6 @@ module PlaidRails
       post :create_token
       expect(response).to_not be_successful
     end
-    
-    it {
-      should permit(:public_token, :type,:name,:owner_id,:owner_type).
-        for(:authenticate, verb: :post, format: :js)}
-    it {
-      should permit(:access_token,:public_token, :type,:name,:owner_id,:owner_type).
-        for(:update, verb: :post, format: :js)}
 
   end
 end
