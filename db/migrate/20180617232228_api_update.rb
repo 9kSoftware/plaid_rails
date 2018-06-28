@@ -7,5 +7,6 @@ class ApiUpdate < ActiveRecord::Migration
     add_column :plaid_rails_webhooks, :new_transactions, :integer
     add_column :plaid_rails_webhooks, :removed_transactions, :text
     add_column :plaid_rails_accounts, :item_id, :string
+    remove_column :plaid_rails_accounts, :token
   end
 end
