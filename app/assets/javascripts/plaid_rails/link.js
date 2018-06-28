@@ -1,11 +1,11 @@
-function getPublicToken(access_token){
+function getPublicToken(access_token) {
     $.post('/plaid/create_token',
-    {access_token: access_token },
-    function(data,status,xhr){
-        return data.public_token;
-    },
-    'json'
-    );
+            {access_token: access_token},
+            function (data, status, xhr) {
+                return data.public_token;
+            },
+            'json'
+            );
 }
 function getPlaid(plaidData) {
     var url = null;
@@ -40,7 +40,7 @@ function getPlaid(plaidData) {
                 dataType: 'script',
                 url: url,
                 data: {
-                    public_token: public_token,
+                    access_token: plaidData.data('access-token'),
                     name: metadata.account.name,
                     type: metadata.account.type,
                     owner_type: plaidData.data('owner-type'),
@@ -62,7 +62,7 @@ $(document).on("click", '#plaidLinkButton', function () {
     var plaidType = plaidData.data('type');
     //open handler for the institution
     if (typeof plaidType === 'undefined') {
-        linkHandler.open();
+    linkHandler.open();
     } else {
         linkHandler.open(plaidType);
     }

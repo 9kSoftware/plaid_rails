@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20180617232228) do
 
   create_table "plaid_rails_accounts", force: true do |t|
     t.string   "access_token"
-    t.string   "token"
     t.string   "plaid_type"
     t.string   "name"
     t.string   "bank_name"

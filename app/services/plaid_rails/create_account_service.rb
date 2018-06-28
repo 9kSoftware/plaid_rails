@@ -17,7 +17,6 @@ module PlaidRails
         institution = response.institution
         PlaidRails::Account.create!(
           access_token: account_params["access_token"], 
-          token: account_params["token"],
           plaid_type: item.institution_id,
           name: account.name,
           bank_name: institution.name,
