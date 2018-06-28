@@ -4,25 +4,30 @@ module PlaidRails
     # creates a new plaid_rails_account for each account the user has selected
     def self.call(account_params)
       account_params["account_ids"].each  do |id|
-        # set Plaid::User
-        user = Plaid::User.load(:connect, account_params["access_token"])
-        # get all the info, make plaid /connect/get call
-        user.transactions
+        # Create the Plaid Client
+        client = Plaid::Client.new(env: PlaidRails.env,
+                  client_id: PlaidRails.client_id,
+                  secret: PlaidRails.secret,
+                  public_key: PlaidRails.public_key)
         #find the account by account_id 
-        account = user.accounts.find{|a| a.id==id}
+        account = client.accounts.get(account_params["access_token"]).accounts.find{|a| a.account_id==id}
+        response =  client.item.get(account_params["access_token"])
+        item = response.item
+        response = client.institutions.get_by_id(item['institution_id'])
+        institution = response.institution
         PlaidRails::Account.create!(
           access_token: account_params["access_token"], 
-          token: account_params["token"],
-          plaid_type: account_params["type"],
+          plaid_type: item.institution_id,
           name: account.name,
-          bank_name: Plaid::Institution.get(account_params["type"]).name,
-          number: account.meta["number"],
+          bank_name: institution.name,
+          number: account.mask,
           owner_id: account_params["owner_id"],
           owner_type: account_params["owner_type"],
-          available_balance: account.available_balance,
-          current_balance: account.current_balance,
+          available_balance: account.balances.available,
+          current_balance: account.balances.current,
           transactions_start_date: account_params["transactions_start_date"],
-          plaid_id: id
+          plaid_id: id,
+          item_id: item.item_id
         ) unless PlaidRails::Account.exists?(plaid_id: id)
       end
       

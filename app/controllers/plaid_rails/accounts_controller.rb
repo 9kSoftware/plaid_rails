@@ -9,10 +9,14 @@ module PlaidRails
     
     # display list of accounts for authenticated user
     def new
-      account_params["access_token"]
-      @user = Plaid::User.load(:connect, account_params["access_token"])
-      @user.transactions
-      @plaid_accounts = @user.accounts
+      client = Plaid::Client.new(env: PlaidRails.env,
+                  client_id: PlaidRails.client_id,
+                  secret: PlaidRails.secret,
+                  public_key: PlaidRails.public_key)
+
+      response = client.accounts.get(account_params["access_token"])
+      @plaid_accounts = response.accounts
+      
     end
     
     #create new bank account and return all the accounts for the owner
@@ -33,7 +37,7 @@ module PlaidRails
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:token,:access_token, :type,:name,
+      params.require(:account).permit(:access_token, :type,:name,
         :owner_id,:owner_type, :transactions_start_date, account_ids:[])
     end
   end

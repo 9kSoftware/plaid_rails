@@ -12,16 +12,16 @@ module PlaidRails
       alias :setup :configure
       
       def instrument(event)
-        name = case event.code
-        when 0
+        name = case event.webhook_code
+        when 'INITIAL_UPDATE'
           "transactions.initial"
-        when 1
+        when 'HISTORICAL_UPDATE'
           "transactions.new"
-        when 2
+        when 'DEFAULT_UPDATE'
           "transactions.interval"
-        when 3
+        when 'TRANSACTIONS_REMOVED'
           "transactions.removed"
-        when 4
+        when 'WEBHOOK_UPDATE_ACKNOWLEDGED'
           "webhook.updated"
         else
           "plaid.error"

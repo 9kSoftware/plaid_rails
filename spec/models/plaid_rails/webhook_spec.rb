@@ -3,9 +3,9 @@ module PlaidRails
   describe Webhook do
     describe "validations" do
 
-      it { should validate_presence_of(:code)}
-      it { should validate_presence_of(:message)}
-      it { should validate_presence_of(:access_token)}
+#      it { should validate_presence_of(:item_id)}
+#      it { should validate_presence_of(:webhook_type)}
+#      it { should validate_presence_of(:webhook_code)}
     end
     describe "methods" do
       it "calls event" do

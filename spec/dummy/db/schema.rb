@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323141534) do
+ActiveRecord::Schema.define(version: 20180617232228) do
 
   create_table "plaid_rails_accounts", force: true do |t|
     t.string   "access_token"
-    t.string   "token"
     t.string   "plaid_type"
     t.string   "name"
     t.string   "bank_name"
@@ -30,19 +29,26 @@ ActiveRecord::Schema.define(version: 20160323141534) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "transactions_start_date"
+    t.string   "item_id"
   end
 
   add_index "plaid_rails_accounts", ["access_token"], name: "index_plaid_rails_accounts_on_access_token"
   add_index "plaid_rails_accounts", ["owner_id"], name: "index_plaid_rails_accounts_on_owner_id"
   add_index "plaid_rails_accounts", ["plaid_id"], name: "index_plaid_rails_accounts_on_plaid_id"
 
-  create_table "webhooks", force: true do |t|
+  create_table "plaid_rails_webhooks", force: true do |t|
     t.integer  "code"
     t.string   "message"
     t.string   "access_token"
     t.text     "params"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "item_id"
+    t.string   "webhook_type"
+    t.string   "webhook_code"
+    t.string   "error"
+    t.integer  "new_transactions"
+    t.text     "removed_transactions"
   end
 
 end

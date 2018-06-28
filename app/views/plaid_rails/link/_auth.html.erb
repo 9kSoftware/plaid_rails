@@ -3,7 +3,7 @@
 
 <div id="plaid-data"
      data-client-name="<%= client_name %>"
-     data-env="<%= Rails.env.production? ? "production" : "tartan"%>"
+     data-env="<%= Rails.env.production? ? "production" : "sandbox"%>"
      data-key="<%=  PlaidRails.public_key %>"
      data-webhook="<%=  PlaidRails.webhook %>"
      data-owner-type="<%=  owner.class.name %>"

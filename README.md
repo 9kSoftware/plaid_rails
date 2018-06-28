@@ -73,3 +73,11 @@ The plaid webhooks runs subscribers for to process transactions and report error
 
 Update the PlaidRails.configuration.webhook with  the address of the webhook url.  The route is `plaid/webhook`
 i.e. http(s)://my.app.com/plaid/webhooks 
+
+### Testing
+To run the tests you need to set the PLAID credentials in environment variables.
+```bash
+export PLAID_CLIENT_ID='your client_id'
+export PLAID_SECRET='your secret'
+export PLAID_PUBLIC_KEY='your public_key'
+```
