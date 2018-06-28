@@ -40,6 +40,7 @@ function getPlaid(plaidData) {
                 dataType: 'script',
                 url: url,
                 data: {
+                    public_token: public_token,
                     access_token: plaidData.data('access-token'),
                     name: metadata.account.name,
                     type: metadata.account.type,
