@@ -1,6 +1,10 @@
 PlaidRails::Engine.routes.draw do
   
-  resources :accounts
+  resources :accounts do
+    member do
+      get :stripe_token
+    end 
+  end
     
   match '/webhooks', to: 'webhooks#create',   via: :post
   match '/authenticate', to: "link#authenticate", via: :post
