@@ -6,9 +6,9 @@ module PlaidRails
     let(:account){create(:account)}
     let(:public_token){create_public_token}
     let(:client){Plaid::Client.new(env: PlaidRails.env,
-                  client_id: PlaidRails.client_id,
-                  secret: PlaidRails.secret,
-                  public_key: PlaidRails.public_key)}
+        client_id: PlaidRails.client_id,
+        secret: PlaidRails.secret,
+        public_key: PlaidRails.public_key)}
     let(:access_token){create_access_token}
     
     it "get index" do
@@ -32,7 +32,7 @@ module PlaidRails
         name:'Wells Fargo', type: 'wells', owner_id: "1", owner_type: "User",
         token: public_token}
       expect(response).to be_success
-      expect(assigns(:plaid_accounts).size).to eq 4
+      expect(assigns(:plaid_accounts).size).to eq 5
       expect(assigns(:plaid_accounts).first.name).to  eq('Plaid Checking')
     end
     
@@ -41,6 +41,19 @@ module PlaidRails
       expect(response).to be_success
       expect(assigns(:plaid_account)).to eq account
     end
+    
+    describe "stripe token" do
+      let(:plaid_account){client.accounts.get(access_token).accounts.
+          find{|a|a.subtype='checking'}}
+      let(:account){create(:account, access_token: access_token,
+          plaid_id: plaid_account.account_id)}
 
+      it "get stripe_token" do
+        get :stripe_token,id: account.id
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+        expect(json['id']).to_not be_nil
+      end
+    end
   end
 end

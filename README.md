@@ -48,6 +48,8 @@ Add a button and javascript to your view to use [Link](https://plaid.com/docs/#l
      data-webhook="<%=  PlaidRails.webhook %>"
      data-longtail="<%=  PlaidRails.longtail %>"
      data-owner-type="<%=  owner.class.name %>"
+     data-plaid-rails-path='/plaid/authenticate'
+     data-product='transactions'
      data-owner-id="<%=  owner.id %>">Link your Bank Account</button>
 
 <!-- put at bottom of page -->

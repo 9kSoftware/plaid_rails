@@ -8,15 +8,17 @@ function getPublicToken(access_token) {
             );
 }
 function getPlaid(plaidData) {
-    var url = null;
+    var path = plaidData.data('plaid-rails-path');
     var access_token = plaidData.data('access-token');
     var env = plaidData.data('env');
+    var product = plaidData.data('product')
+    if (typeof product === 'undefined') {
+        product = 'transactions'
+    }
     var token;
     if (typeof access_token === 'undefined') {
-        url = '/plaid/authenticate';
         token = null;
     } else {
-        url = '/plaid/update';
         token = getPublicToken(access_token);
     }
 
@@ -25,7 +27,7 @@ function getPlaid(plaidData) {
         apiVersion: 'v2',
         clientName: plaidData.data('client-name'),
         key: plaidData.data('key'),
-        product: 'transactions',
+        product: product,
         webhook: plaidData.data('webhook'),
         token: token,
         onLoad: function () {
@@ -38,7 +40,7 @@ function getPlaid(plaidData) {
             $.ajax({
                 type: 'POST',
                 dataType: 'script',
-                url: url,
+                url: path,
                 data: {
                     public_token: public_token,
                     access_token: plaidData.data('access-token'),
@@ -50,8 +52,13 @@ function getPlaid(plaidData) {
                 }
             });
         },
-        onExit: function () {
+        onExit: function (err, metadata) {
             // The user exited the Link flow.
+            if (err != null) {
+                $('#plaidError').append(err.error_message)
+                // The user encountered a Plaid API error prior to exiting.
+                console.log(JSON.stringify(err))
+            }
         }
     });
     return linkHandler;
@@ -63,7 +70,7 @@ $(document).on("click", '#plaidLinkButton', function () {
     var plaidType = plaidData.data('type');
     //open handler for the institution
     if (typeof plaidType === 'undefined') {
-    linkHandler.open();
+        linkHandler.open();
     } else {
         linkHandler.open(plaidType);
     }
