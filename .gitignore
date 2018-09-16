@@ -42,4 +42,4 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
-/nbproject
+nbproject/
