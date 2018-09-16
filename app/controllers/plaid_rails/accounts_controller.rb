@@ -37,15 +37,12 @@ module PlaidRails
     # /accounts/:account_id/stripe_token
     def stripe_token
       plaid_account = PlaidRails::Account.find(params[:id])
-
       client = Plaid::Client.new(env: PlaidRails.env,
         client_id: PlaidRails.client_id,
         secret: PlaidRails.secret,
         public_key: PlaidRails.public_key)
-      
       stripe_response = client.processor.stripe.bank_account_token.
         create(plaid_account.access_token, plaid_account.plaid_id)
-      
       bank_account_token = stripe_response['stripe_bank_account_token']
       
       render json: {id: bank_account_token}

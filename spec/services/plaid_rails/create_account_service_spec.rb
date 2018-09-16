@@ -21,7 +21,7 @@ module PlaidRails
   
     it "can call CreateAccountService" do
       accounts =  PlaidRails::CreateAccountService.call(account_params)
-      expect(accounts.size).to eq 4
+      expect(accounts.size).to eq 5
     end
   
   end
