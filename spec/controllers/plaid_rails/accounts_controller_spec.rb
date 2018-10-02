@@ -53,7 +53,9 @@ module PlaidRails
         expect(response).to be_successful
         json = JSON.parse(response.body)
         expect(json['id']).to_not be_nil
+        expect(account.reload.stripe_token).to eq(json['id'])
       end
+      
     end
   end
 end

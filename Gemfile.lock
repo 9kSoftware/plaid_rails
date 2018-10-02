@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    plaid_rails (0.12.0)
+    plaid_rails (0.13.0)
       jquery-rails
       plaid (~> 6.0)
       rails (~> 4.1.15)
