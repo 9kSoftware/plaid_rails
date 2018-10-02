@@ -35,7 +35,7 @@ module PlaidRails
           client_id: PlaidRails.client_id,
           secret: PlaidRails.secret,
           public_key: PlaidRails.public_key).and_return(client)
-        expect(client).to receive(:transactions).and_return([1])
+
         expect(client).to receive(:item).and_return(item)
         expect(item).to receive(:remove).with(token)
         account.send(:delete_connect)
@@ -48,16 +48,7 @@ module PlaidRails
           secret: PlaidRails.secret,
           public_key: PlaidRails.public_key).and_raise("boom")      
       end
-    
-      it "does not delete_connect without transactions" do
-        user = double
-        expect(Plaid::Client).to receive(:new).with(env: PlaidRails.env,
-          client_id: PlaidRails.client_id,
-          secret: PlaidRails.secret,
-          public_key: PlaidRails.public_key).and_return(user)
-        expect(user).to receive(:transactions).and_return([])
-        account.update(access_token: 'foobar')
-      end
+   
     
       it 'does not delete_connect with same access_token' do
         2.times{FactoryGirl.create(:account) }

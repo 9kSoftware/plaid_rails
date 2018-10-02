@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180617232228) do
+ActiveRecord::Schema.define(version: 20180924123554) do
 
   create_table "plaid_rails_accounts", force: true do |t|
     t.string   "access_token"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20180617232228) do
     t.datetime "updated_at"
     t.date     "transactions_start_date"
     t.string   "item_id"
+    t.string   "stripe_token"
   end
 
   add_index "plaid_rails_accounts", ["access_token"], name: "index_plaid_rails_accounts_on_access_token"
