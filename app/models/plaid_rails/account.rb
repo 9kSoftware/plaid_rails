@@ -28,11 +28,9 @@ module PlaidRails
           client_id: PlaidRails.client_id,
           secret: PlaidRails.secret,
           public_key: PlaidRails.public_key)
-        # skip delete if there are no transactions
-        if client.transactions.any?
+        
           client.item.remove(access_token)
           Rails.logger.info "Deleted Plaid User with token #{token_last_8}"
-        end
       rescue  => e
         message = "Unable to delete user with token #{token_last_8}"
         Rails.logger.error "#{message}: #{e.message}"

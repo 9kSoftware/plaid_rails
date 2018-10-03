@@ -44,7 +44,7 @@ module PlaidRails
       stripe_response = client.processor.stripe.bank_account_token.
         create(plaid_account.access_token, plaid_account.plaid_id)
       bank_account_token = stripe_response['stripe_bank_account_token']
-      
+      plaid_account.update(stripe_token: bank_account_token)
       render json: {id: bank_account_token}
     end
     

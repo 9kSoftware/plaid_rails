@@ -11,9 +11,9 @@ function getPlaid(plaidData) {
     var path = plaidData.data('plaid-rails-path');
     var access_token = plaidData.data('access-token');
     var env = plaidData.data('env');
-    var product = plaidData.data('product')
+    var product = plaidData.data('product');
     if (typeof product === 'undefined') {
-        product = 'transactions'
+        product = 'transactions';
     }
     var token;
     if (typeof access_token === 'undefined') {
@@ -54,10 +54,9 @@ function getPlaid(plaidData) {
         },
         onExit: function (err, metadata) {
             // The user exited the Link flow.
-            if (err != null) {
-                $('#plaidError').append(err.error_message)
+            if (err !== null) {
                 // The user encountered a Plaid API error prior to exiting.
-                console.log(JSON.stringify(err))
+                $('#plaidError').append(err.error_message);                
             }
         }
     });
